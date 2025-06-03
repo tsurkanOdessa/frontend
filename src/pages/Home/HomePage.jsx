@@ -23,6 +23,7 @@ const HomePage = () => {
   const [filters, setFilters] = useState({
     rooms: '',
     beds: '',
+    type: '',
     minPrice: '',
     maxPrice: '',
     distanceToSea: '',
@@ -40,6 +41,7 @@ const HomePage = () => {
         ordering: sortConfig.direction === 'asc' ? sortConfig.key : `-${sortConfig.key}`,
         ...filters.rooms && { rooms: filters.rooms },
         ...filters.beds && { beds: filters.beds },
+        ...filters.type && { type: filters.type },
         ...filters.minPrice && { price_min: filters.minPrice },
         ...filters.maxPrice && { price_max: filters.maxPrice },
         ...filters.distanceToSea && { distance_to_sea: filters.distanceToSea },
