@@ -47,7 +47,8 @@ const updateUserProfile = async (userData, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.put(`${API_URL}profile/`, userData, config);
+        console.log('userData:', userData);
+  const response = await axios.patch(`${API_URL}profile/`, userData, config);
   return response.data;
 };
 

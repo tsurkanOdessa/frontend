@@ -3,6 +3,7 @@ import axios from 'axios';
 const API_URL = 'http://127.0.0.1:8000/api/reserve/';
 
 const getBookings = async (token) => {
+  //token = localStorage.getItem('accessToken')
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -53,12 +54,14 @@ const getBookingDetail = async (id, token) => {
 };
 
 const cancelBooking = async (id, token) => {
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
   const response = await axios.patch(`${API_URL}${id}/`, { status: 'cancelled' }, config);
+
   return response.data;
 };
 

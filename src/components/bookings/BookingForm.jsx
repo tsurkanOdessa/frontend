@@ -13,14 +13,14 @@ import { useNavigate } from 'react-router-dom';
 
 const BookingForm = ({ realty }) => {
   const navigate = useNavigate();
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [date_from, setStartDate] = useState(null);
+  const [date_to, setEndDate] = useState(null);
   const [guests, setGuests] = useState(1);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!startDate || !endDate) {
+    if (!date_from || !date_to) {
       alert("Выберите даты заезда и выезда");
       return;
     }
@@ -30,8 +30,8 @@ const BookingForm = ({ realty }) => {
     const bookingData = {
       home: realty.id,
       price: realty.price,
-      date_from: format(startDate, 'yyyy-MM-dd'),
-      date_to: format(endDate, 'yyyy-MM-dd'),
+      date_from: format(date_from, 'yyyy-MM-dd'),
+      date_to: format(date_to, 'yyyy-MM-dd'),
       guests,
     };
 
@@ -67,7 +67,7 @@ const BookingForm = ({ realty }) => {
           <Grid item xs={12} sm={6}>
             <DatePicker
               label="Заезд"
-              value={startDate}
+              value={date_from}
               onChange={setStartDate}
               format="dd.MM.yyyy"
               renderInput={(params) => <TextField {...params} fullWidth />}
@@ -77,11 +77,11 @@ const BookingForm = ({ realty }) => {
           <Grid item xs={12} sm={6}>
             <DatePicker
               label="Выезд"
-              value={endDate}
+              value={date_to}
               onChange={setEndDate}
               format="dd.MM.yyyy"
               renderInput={(params) => <TextField {...params} fullWidth />}
-              minDate={startDate || new Date()}
+              minDate={date_from || new Date()}
             />
           </Grid>
           <Grid item xs={12}>

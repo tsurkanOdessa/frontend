@@ -3,22 +3,37 @@ import axios from 'axios';
 const API_URL = 'http://127.0.0.1:8000/api/realty/';
 
 const getRealtyList = async () => {
-    const defaultParams = {
+
+  const defaultParams = {
     is_active: true,
   };
-  //const response = await axios.get(API_URL);
-  const response = await axios.get(API_URL, {
-    params: {
-      ...defaultParams,
+  const token = localStorage.getItem('accessToken');
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-  });
+    params: defaultParams,
+  };
+
+  const response = await axios.get(API_URL, config);
   return response.data;
 };
 
+
 const getRealtyDetail = async (id) => {
-  const response = await axios.get(`${API_URL}${id}/`);
+  const token = localStorage.getItem('accessToken');
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+   //console.error('Ошибка загрузки:', id);
+   //console.error('Ошибка загрузки:', `${API_URL}${id}/`);
+   //console.error('Ошибка загрузки:', config);
+  const response = await axios.get(`${API_URL}${id}/`, config); // <--- вот здесь добавлен config
   return response.data;
 };
+
 
 const createRealty = async (realtyData, token) => {
   const config = {

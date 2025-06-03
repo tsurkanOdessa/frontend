@@ -38,7 +38,8 @@ const BookingDetail = () => {
     const fetchBooking = async () => {
       try {
         setLoading(true);
-        const response = await bookingsAPI.getBookingDetail(id);
+        const token = localStorage.getItem('accessToken');
+        const response = await bookingsAPI.getBookingDetail(id,token);
         setBooking(response);
       } catch (err) {
         setError(err.message);
@@ -55,7 +56,8 @@ const BookingDetail = () => {
 
     setCancelLoading(true);
     try {
-      await bookingsAPI.cancelBooking(id);
+      const token = localStorage.getItem('accessToken');
+      await bookingsAPI.cancelBooking(id,token);
       navigate('/bookings', { state: { bookingCancelled: true } });
     } catch (err) {
       setError(err.message);
@@ -81,6 +83,7 @@ const BookingDetail = () => {
   }
 
   if (!booking) return null;
+
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
@@ -120,7 +123,7 @@ const BookingDetail = () => {
               <ListItem>
                 <ListItemText
                   primary="Даты"
-                  secondary={`${new Date(booking.start_date).toLocaleDateString()} - ${new Date(booking.end_date).toLocaleDateString()}`}
+                  secondary={`${new Date(booking.date_from).toLocaleDateString()} - ${new Date(booking.date_to).toLocaleDateString()}`}
                   secondaryTypographyProps={{ display: 'flex', alignItems: 'center' }}
                 />
                 <Event color="action" sx={{ ml: 1 }} />
@@ -159,6 +162,8 @@ const BookingDetail = () => {
             <Typography variant="h6" gutterBottom fontWeight="bold">
               Контактная информация
             </Typography>
+
+
 
             <List>
               <ListItem>
@@ -203,10 +208,21 @@ const BookingDetail = () => {
 
           <Button
             variant="contained"
-            onClick={() => navigate(`/realty/${booking.home.id}`)}
+
+              onClick={() => {
+                console.log('Booking object:', booking); // Добавьте это для отладки
+                const homeId = booking?.home;
+                if (homeId) {
+                  navigate(`/realty/${homeId}`);
+                } else {
+                  console.warn('home.id отсутствует в booking:', booking);
+                  alert('Ошибка: жильё не найдено. Проверьте консоль для подробностей.');
+                }
+              }}
           >
             Посмотреть жилье
           </Button>
+
         </Box>
       </Paper>
     </Container>

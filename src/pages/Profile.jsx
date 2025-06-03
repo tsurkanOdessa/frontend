@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
+import Header from '../components/common/Header';
+import Footer from '../components/common/Footer';
 import {
   Container,
   Typography,
@@ -42,15 +44,15 @@ const Profile = () => {
       try {
         setLoading(true);
         const token = localStorage.getItem('accessToken');
-        console.log('Access Token:', token); // Временный лог
         const userData = await authAPI.getUserProfile(token);
-        console.log('User Data:', userData); // Временный лог
+
         setUser(userData);
         setFormData({
           firstName: userData.first_name,
           lastName: userData.last_name,
           email: userData.email
         });
+
       } catch (err) {
         setError(err.message);
       } finally {
@@ -77,14 +79,16 @@ const Profile = () => {
       await authAPI.updateUserProfile({
         first_name: formData.firstName,
         last_name: formData.lastName,
-        email: formData.email
+
       }, token);
       setUser(prev => ({
         ...prev,
         first_name: formData.firstName,
         last_name: formData.lastName,
-        email: formData.email
+
       }));
+
+
       setEditMode(false);
     } catch (err) {
       setError(err.message);
@@ -110,6 +114,9 @@ const Profile = () => {
   }
 
   return (
+          <>
+        <Header />
+
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
@@ -253,6 +260,8 @@ const Profile = () => {
         )}
       </Paper>
     </Container>
+                   <Footer />
+      </>
   );
 };
 

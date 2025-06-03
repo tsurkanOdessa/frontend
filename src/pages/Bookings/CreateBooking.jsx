@@ -61,8 +61,8 @@ const CreateBooking = () => {
 
     try {
       await bookingsAPI.createBooking({
-        start_date: startDate.toISOString().split('T')[0],
-        end_date: endDate.toISOString().split('T')[0],
+        date_from: startDate.toISOString().split('T')[0],
+        date_to: endDate.toISOString().split('T')[0],
         guests,
         home: 1 // В реальном приложении это будет ID выбранного жилья
       });
