@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import Header from '../../components/common/Header';
+import Footer from '../../components/common/Footer';
 import {
   Container,
   Typography,
@@ -86,6 +88,9 @@ const BookingDetail = () => {
 
 
   return (
+   <>
+   <Header />
+
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Button
         startIcon={<ArrowBack />}
@@ -226,6 +231,9 @@ const BookingDetail = () => {
         </Box>
       </Paper>
     </Container>
+
+      <Footer />
+      </>
   );
 };
 
